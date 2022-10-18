@@ -35,48 +35,58 @@ function clickDot() {
     result.textContent = secondNumber;
   }
 }
-
-function plus(firstValue, secondValue) {
-  firstNumber = Number(firstValue) + Number(secondValue);
-  console.log(firstNumber);
-  return firstNumber;
+function plus() {
+  if (arguments.length === 1) {
+    console.log(firstNumber);
+    return firstNumber;
+  } else {
+    firstNumber = Number(firstNumber) + Number(secondNumber);
+    console.log(firstNumber);
+    secondNumber = '';
+    return firstNumber;
+  }
 }
-function minus(firstValue, secondValue) {
+function minus() {
   if (firstNumber === '0') {
     firstNumber = '-';
     result.textContent = firstNumber;
-    // return firstNumber;
+  } else if (arguments.length === 1) {
+    return firstNumber;
   } else {
-    firstNumber = firstValue - secondValue;
+    firstNumber = firstNumber - secondNumber;
+    secondNumber = '';
     console.log(firstNumber);
-  }
-  return firstNumber;
-}
-function multiply(firstValue, secondValue) {
-  if (secondValue === '') {
     return firstNumber;
-  } else if (firstValue === '0' || secondValue === '0') {
+  }
+}
+function multiply() {
+  if (arguments.length === 1) {
+    return firstNumber;
+  } else if (firstNumber === '0' || secondNumber === '0') {
     firstNumber = '0';
     return firstNumber;
   }
-  firstNumber = firstValue * secondValue;
+  firstNumber = firstNumber * secondNumber;
+  secondNumber = '';
+  console.log('E');
   return firstNumber;
 }
-function division(firstValue, secondValue) {
-  if (secondValue === '') {
+function division() {
+  if (arguments.length === 1) {
     return firstNumber;
-  } else if (firstValue === '0' || secondValue === '0') {
+  } else if (firstNumber === '0' || secondNumber === '0') {
     firstNumber = '0';
     return firstNumber;
   }
-  firstNumber = firstValue / secondValue;
+  firstNumber = firstNumber / secondNumber;
+  secondNumber = '';
   return firstNumber;
 }
-function percent(firstValue, secondValue) {
-  if (secondValue === '') {
+function percent() {
+  if (arguments.length === 1) {
     return firstNumber;
   }
-  firstNumber = (firstValue / 100) * secondValue;
+  firstNumber = (firstNumber / 100) * secondNumber;
   return firstNumber;
 }
 function replace() {
@@ -84,11 +94,13 @@ function replace() {
   firstNumber *= -'1';
 }
 function equals() {
-  if (isReplace) {
+  if (isReplace || symbol === '') {
     result.textContent = firstNumber;
+  } else if (secondNumber === '') {
+    result.textContent = actions[symbol](firstNumber);
   } else {
     result.textContent = actions[symbol](firstNumber, secondNumber);
-    console.log(firstNumber);
+    console.log(firstNumber + 'equals');
     symbol = '';
     secondNumber = '';
   }
@@ -105,7 +117,6 @@ const buttons = event => {
 
   result.textContent = '';
   //gate buttons
-
   if (digits.includes(key)) {
     //put the value in the first variable!!!
     if (secondNumber === '' && symbol === '') {
@@ -128,26 +139,33 @@ const buttons = event => {
       symbol = '';
       result.textContent = firstNumber;
     }
-    //feach multi plus (2+2+2+2)
     // bug!
-    else if (firstNumber !== '' && secondNumber !== '' && symbol !== '') {
-      secondNumber = key;
-      result.textContent = secondNumber;
-    }
+    // else if (firstNumber !== '' && secondNumber === '' && symbol !== '') {
+    //   secondNumber = key;
+    //   result.textContent = secondNumber;
+    // }
     //put the value in the second number!!!
     else {
       secondNumber += key;
       result.textContent = secondNumber;
-      console.log(secondNumber + 'sjhfd');
+      console.log(secondNumber);
     }
     return;
   }
   //checking for symbols
   if (Object.keys(actions).includes(key)) {
-    symbol = key;
-    result.textContent = symbol;
+    result.textContent = key;
     console.log(symbol);
-    return actions[key](firstNumber, secondNumber);
+    if (firstNumber !== '' && secondNumber !== '' && symbol !== '') {
+      firstNumber = actions[symbol](firstNumber, secondNumber);
+      symbol = key;
+    } else if (secondNumber !== '') {
+      symbol = key;
+      return actions[key](firstNumber, secondNumber);
+    } else {
+      symbol = key;
+      return actions[key](firstNumber);
+    }
   }
 };
 document.querySelector('.equals').onclick = equals;
