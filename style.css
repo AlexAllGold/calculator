@@ -25,6 +25,7 @@ grid-ы and flex в чем разница и что это!
     justify-items: end;
     align-items: end;
     margin-bottom: 25px;
+    overflow: auto;
 }
 .calc-screen span {
     text-align: right;
