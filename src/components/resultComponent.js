@@ -3,8 +3,6 @@ import { ServiceActions } from '../services/serviceActions.js';
 import { CommonComponent } from './commonComponent.js';
 
 export class ResultComponent extends CommonComponent {
-  //logic call for document.querySelector.onclick
-  //call service!
   #store;
   #service;
   constructor(store, service) {
@@ -15,7 +13,6 @@ export class ResultComponent extends CommonComponent {
   #render() {
     this.getComponent().textContent = this.#store.getState().result;
   }
-  //events here!!!
   calculate({ target }) {
     //if click no buttons
     if (!target.classList.contains('btn')) return;
@@ -32,7 +29,6 @@ export class ResultComponent extends CommonComponent {
     this.#render();
   }
   replace() {
-    this.#store.setState({ isReplace: true });
-    this.#store.setState({ firstNumber: (this.#store.getState().firstNumber *= -'1') });
+    this.#store.setState({ firstNumber: (this.#store.getState().firstNumber *= -'1'), isReplace: true });
   }
 }

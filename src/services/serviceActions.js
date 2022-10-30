@@ -1,6 +1,5 @@
 import { CalcStore } from '../store/calcStore.js';
-//In service change only store!!!
-//service use in component!
+
 export class ServiceActions {
   #store;
   #actions;
@@ -100,6 +99,7 @@ export class ServiceActions {
     }
   }
   #checkNumber(currentKey) {
+    let currentResult = '';
     const { firstNumber, secondNumber, currentSymbol } = this.#store.getState();
     //put the value in the first variable
     if (!this.#isEmpty(secondNumber) && !this.#isEmpty(currentSymbol)) {
@@ -116,13 +116,13 @@ export class ServiceActions {
     }
     //catch a minus in a number (first)
     else if (firstNumber === '-') {
-      this.#store.setState({ firstNumber: firstNumber + currentKey, currentSymbol: '' });
-      this.#store.setState({ result: this.#store.getState().firstNumber });
+      currentResult = firstNumber + currentKey;
+      this.#store.setState({ firstNumber: currentResult, result: currentResult, currentSymbol: '' });
     }
     //put the value in the second variable
     else {
-      this.#store.setState({ secondNumber: secondNumber + currentKey });
-      this.#store.setState({ result: this.#store.getState().secondNumber });
+      currentResult = secondNumber + currentKey;
+      this.#store.setState({ secondNumber: currentResult, result: currentResult });
     }
   }
   #checkAction(currentKey) {

@@ -1,20 +1,18 @@
-/* colors
-|...bg.#000
-|...orange.#ff9501
-|...grey.#a6a6a6
-|...white.#fdfdfd
-css variables - почитать что это и как использовать!
-grid-ы and flex в чем разница и что это!
- */
+:root {
+ --black : #000;
+ --orange : #ff9501;
+ --grey : #a6a6a6;
+ --white : #fdfdfd;
+}
 .calc {
     margin: 50px auto;
     width: 300px;
     height: 500px;
     /*border: 1px solid #000;*/
     border-radius: 20px;
-    background: #000;
-    color: #fff;
-    font-family: Arial;
+    background: var(--black);
+    color: var(--white);
+    font-family: "Gill Sans", sans-serif;
     padding: 18px;
     box-shadow: 4px 4px 4px #4f4f4f;
 }
@@ -67,8 +65,8 @@ grid-ы and flex в чем разница и что это!
     filter: brightness(90%);
 }
 .btn.bg-grey {
-    background: #a6a6a6;
+    background: var(--grey);
 }
 .btn.bg-orange {
-    background: #ff9501;
+    background: var(--orange);
 }
